@@ -39,8 +39,8 @@ div { display: block; }
 Run **list-css-selectors**:
 ```javascript
 const listSelectors = require('list-css-selectors');
-const path = require('path');
-const pathToMyFile = path.resolve(__dirname, './styles.css');
+const { resolve } = require('path');
+const pathToMyFile = resolve(resolve(), './styles.css');
 const selectors = listSelectors(pathToMyFile);
 ```
 
