@@ -5,6 +5,7 @@ A simple way to list all the selectors used in your CSS file(s).
 
 ### Usage
 
+Your CSS file:
 ```css
 #some-id { color: red; }
 .some-class { color: white; }
@@ -25,6 +26,7 @@ A simple way to list all the selectors used in your CSS file(s).
 ```
 
 
+Run **list-css-selectors**:
 ```javascript
 const listSelectors = require('list-css-selectors');
 const path = require('path');
