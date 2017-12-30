@@ -7,9 +7,12 @@ A simple way to list all the selectors used in your CSS file(s).
 
 Your CSS file:
 ```css
+div { display: block; }
+
 #some-id { color: red; }
 .some-class { color: white; }
 .hover:hover { color: blue; }
+
 [data-noval] { opacity: 0; }
 [data-test='ok'] { opacity: 1; }
 
@@ -37,6 +40,7 @@ const selectors = listSelectors(pathToMyFile);
 The results of `selectors` will be:
 ```javascript
 [
+  'div',
   '#some-id',
   '.some-class',
   '.hover::hover',
