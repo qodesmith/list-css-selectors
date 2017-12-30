@@ -1,10 +1,19 @@
 const postcss = require('postcss');
 const fs = require('fs');
+const glob = require('glob');
 
 function listCssSelectors(filenames) {
   if (!Array.isArray(filenames)) filenames = [filenames];
   if (!filenames.length) throw 'You gave me an empty array. I feel so empty inside...';
   if (filenames.some(s => !s.split)) throw `Oops! Something passed wasn't a string.`;
+
+  // If globs were passed, boil everything down to a flat array of absolute paths.
+  filenames = flattenArray(filenames.map(name => glob.sync(name)));
+  if (!filenames.length) {
+    console.log('\n\nNo matching files found for whitelisting.');
+    console.log('Proceeding with an empty array.\n\n');
+    return [];
+  }
 
   const list = filenames.map(filename => {
     const css = fs.readFileSync(filename, 'utf-8');

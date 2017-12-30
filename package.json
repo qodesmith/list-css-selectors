@@ -21,6 +21,7 @@
     "url": "https://github.com/qodesmith/list-css-selectors.git"
   },
   "dependencies": {
+    "glob": "^7.1.2",
     "postcss": "^6.0.14"
   }
 }
