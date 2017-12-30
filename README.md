@@ -2,8 +2,15 @@
 
 A simple way to list all the selectors used in your CSS file(s).
 
+## Installation
 
-### Usage
+Via [npm](https://www.npmjs.com/package/list-css-selectors):
+```
+npm i list-css-selectors
+```
+
+
+## Usage
 
 Your CSS file:
 ```css
