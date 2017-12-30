@@ -8,7 +8,7 @@ A simple way to list all the selectors used in your CSS file(s).
 ```css
 #some-id { color: red; }
 .some-class { color: white; }
-.hover::hover { color: blue; }
+.hover:hover { color: blue; }
 [data-noval] { opacity: 0; }
 [data-test='ok'] { opacity: 1; }
 
@@ -30,19 +30,17 @@ const listSelectors = require('list-css-selectors');
 const path = require('path');
 const pathToMyFile = path.resolve(__dirname, './styles.css');
 const selectors = listSelectors(pathToMyFile);
+```
 
-/*
-  Results:
-  --------
-
-  [
-    '#some-id',
-    '.some-class',
-    '.hover::hover',
-    '[data-noval]',
-    '[data-test=\'ok\']',
-    'softblink',
-    '.selector-in-media-query'
-  ]
-*/
+The results of `selectors` will be:
+```javascript
+[
+  '#some-id',
+  '.some-class',
+  '.hover::hover',
+  '[data-noval]',
+  '[data-test=\'ok\']',
+  'softblink',
+  '.selector-in-media-query'
+]
 ```
