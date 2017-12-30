@@ -1,0 +1,24 @@
+{
+  "name": "list-css-selectors",
+  "version": "1.0.0",
+  "description": "List all the selectors in your CSS files(s).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "list",
+    "css",
+    "selectors",
+    "classes",
+    "\"class",
+    "names\"",
+    "styles"
+  ],
+  "author": "Qodesmith",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qodesmith/list-css-selectors.git"
+  }
+}
