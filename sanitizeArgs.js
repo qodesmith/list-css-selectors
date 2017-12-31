@@ -1,3 +1,4 @@
+const glob = require('glob');
 const flattenArray = require('./flattenArray.js');
 
 function sanitizeArgs(arr) {
