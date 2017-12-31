@@ -3,9 +3,10 @@ const flattenArray = require('./flattenArray.js');
 
 function sanitizeArgs(arr) {
   if (!Array.isArray(arr)) arr = [arr];
+  arr = arr.filter(Boolean);
 
-  // Avoids errors if an empty array or no arguments are passed.
-  if (!arr.length || (arr.length === 1 && !arr[0])) {
+  // Avoids errors if an empty array, no arguments, or falsey things are passed.
+  if (!arr.length) {
     console.log('\n\nNo items for processing. Moving right along...\n\n');
     return [];
   }
