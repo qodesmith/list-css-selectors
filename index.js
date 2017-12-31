@@ -8,7 +8,7 @@ function listCssSelectors(filenames) {
   if (filenames.some(s => !s.split)) throw `Oops! Something passed wasn't a string.`;
 
   // If globs were passed, boil everything down to a flat array of absolute paths.
-  filenames = flattenArray(filenames.map(name => glob.sync(name)));
+  filenames = flattenArray(filenames.map(name => glob.sync(name, { absolute: true })));
   if (!filenames.length) {
     console.log('\n\nNo matching files found for whitelisting.');
     console.log('Proceeding with an empty array.\n\n');
