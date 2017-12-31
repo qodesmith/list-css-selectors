@@ -1,6 +1,6 @@
 {
   "name": "list-css-selectors",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "List all the selectors in your CSS files(s).",
   "main": "index.js",
   "scripts": {
