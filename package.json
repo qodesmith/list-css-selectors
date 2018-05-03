@@ -25,6 +25,7 @@
     "glob": "^7.1.2",
     "postcss": "^6.0.14",
     "postcss-less": "^1.1.3",
-    "postcss-scss": "^1.0.4"
+    "postcss-scss": "^1.0.4",
+    "postcss-selector-parser": "^4.0.0"
   }
 }

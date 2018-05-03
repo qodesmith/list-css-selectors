@@ -23,7 +23,7 @@ function listSelectors(filenames) {
 
     if (ext === 'scss' || ext === 'sass') return parseScss(data);
     if (ext === 'less') return parseLess(data);
-    return parseCss(data);
+    return parseCss(postcss.parse(data).nodes);
   });
 
   // Remove duplicates from the results.
@@ -45,9 +45,12 @@ function whatify(str) {
   }, ''));
 }
 
-function parseCss(data) {
-  console.log(postcss.parse(data).nodes[1])
-  return postcss.parse(data).nodes.map(node => {
+/*
+  Uses `postcss` to parse a files contents (passed in as a string)
+  and returns an array of selectors.
+*/
+function parseCss(nodes) {
+  return nodes.map(node => {
     // Regular selectors, such as `.some-class`.
     if (node.type === 'rule') return node.selector;
 
@@ -56,14 +59,20 @@ function parseCss(data) {
 
     // Media queries - they can contain other rules & keyframes.
     if (node.type === 'atrule' && node.name === 'media') return parseCss(node.nodes);
+
+    // Support rule - they can contain other rules.
+    if (node.type === 'atrule' && node.name === 'supports') return parseCss(node.nodes);
   }).filter(Boolean);
 }
 
+function processCssNodes(nodes) {
+
+}
+
 function parseScss(data) {
-  console.log(postcss)
-  // const { nodes } = postcss.parse(data, { parse: scss });
-  // console.log(nodes[0].nodes)
-  // return processScssNodes(nodes);
+  const { nodes } = postcss.parse(data, { parse: scss });
+  global.nodes = nodes;
+  return processScssNodes(nodes);
 }
 
 function processScssNodes(nodes) {
