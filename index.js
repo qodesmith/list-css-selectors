@@ -1,10 +1,10 @@
 const postcss = require('postcss');
 const fs = require('fs');
-const glob = require('glob');
 const sanitizeArgs = require('./sanitizeArgs.js');
 const flattenArray = require('./flattenArray.js');
 
 function listCssSelectors(filenames) {
+  // Uses `glob` to create an array of absolute paths for the files.
   filenames = sanitizeArgs(filenames);
   if (!filenames.length) return [];
 
@@ -14,20 +14,43 @@ function listCssSelectors(filenames) {
     return parsePostcssNodes(parsed.nodes);
   });
 
-  return flattenArray(list);
+  return flattenArray(list)
+    .map(item => item && item.trim && item.trim())
+    .filter(Boolean);
 }
 
 function parsePostcssNodes(nodes) {
   return nodes.map(node => {
-    // Regular selectors, such as `.some-class`.
+    /*
+      Some selectors come back with new line characters in them.
+      These are left as is. You can use a package like `css-what`
+      to further parse things like that. The package is a companion
+      to `purgecss-whitelister` which uses `css-what` under the hood.
+    */
+
+    // Regular selectors such as `.some-class`, `#some-id`, etc.
     if (node.type === 'rule') return node.selector;
 
-    // The keyframe animation name.
-    if (node.type === 'atrule' && node.name === 'keyframes') return node.params;
+    if (node.type === 'atrule') {
+      switch (node.name) {
+        // The keyframe animation name.
+        case 'keyframes':
+          return node.params;
 
-    // Media queries - they can contain other rules & keyframes.
-    if (node.type === 'atrule' && node.name === 'media') return parsePostcssNodes(node.nodes);
-  }).filter(Boolean);
+        /*
+          https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
+          Nested @ rules that can contain other rules & keyframes.
+          Media & supports queries - can contain other rules & keyframes.
+        */
+        case 'media':
+        case 'supports':
+        case 'document':
+          return parsePostcssNodes(node.nodes);
+        default:
+          return null;
+      }
+    }
+  });
 }
 
 module.exports = listCssSelectors;
